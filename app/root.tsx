@@ -8,6 +8,9 @@ import {
 	ScrollRestoration,
 } from "react-router";
 
+import { Footer } from "~/shared/components/footer";
+import { Header } from "~/shared/components/header";
+
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -20,22 +23,32 @@ export const links: Route.LinksFunction = () => [
 	},
 	{
 		rel: "stylesheet",
-		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+		href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap",
 	},
 	{ rel: "stylesheet", href: bootstrapHref },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="pt-BR">
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta
+					name="description"
+					content="Busque um usuário do GitHub e explore seus repositórios mais populares."
+				/>
+				<title>GitHub Explorer</title>
 				<Meta />
 				<Links />
 			</head>
 			<body>
-				{children}
+				<div className="d-flex flex-column" style={{ minHeight: "100dvh" }}>
+					<div className="hero-field" aria-hidden="true" />
+					<Header />
+					<div className="flex-grow-1 d-flex flex-column">{children}</div>
+					<Footer />
+				</div>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
