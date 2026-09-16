@@ -31,4 +31,12 @@ function ExternalLinkIcon(props: IconProps) {
 	return <BootstrapIcon name="box-arrow-up-right" {...props} />;
 }
 
-export { SearchIcon, ExternalLinkIcon };
+function EnvelopeIcon(props: IconProps) {
+	return <BootstrapIcon name="envelope" {...props} />;
+}
+
+function GithubIcon(props: IconProps) {
+	return <BootstrapIcon name="github" {...props} />;
+}
+
+export { SearchIcon, ExternalLinkIcon, EnvelopeIcon, GithubIcon };
