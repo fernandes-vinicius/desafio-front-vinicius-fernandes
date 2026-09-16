@@ -29,16 +29,6 @@
 			"recommended": true,
 			"correctness": {
 				"useUniqueElementIds": "off"
-			},
-			"nursery": {
-				"useSortedClasses": {
-					"fix": "safe",
-					"level": "error",
-					"options": {
-						"attributes": ["classList"],
-						"functions": ["clsx", "cva", "tw", "tw.*"]
-					}
-				}
 			}
 		}
 	},
