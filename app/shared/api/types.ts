@@ -8,3 +8,14 @@ export interface GithubUser {
 	following: number;
 	htmlUrl: string;
 }
+
+export interface GithubRepo {
+	id: number;
+	name: string;
+	fullName: string;
+	description: string | null;
+	stargazersCount: number;
+	language: string | null;
+	htmlUrl: string;
+	updatedAt: string;
+}

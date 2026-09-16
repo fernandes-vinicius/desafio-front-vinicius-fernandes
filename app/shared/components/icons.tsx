@@ -39,4 +39,8 @@ function GithubIcon(props: IconProps) {
 	return <BootstrapIcon name="github" {...props} />;
 }
 
-export { SearchIcon, ExternalLinkIcon, EnvelopeIcon, GithubIcon };
+function StarIcon(props: IconProps) {
+	return <BootstrapIcon name="star-fill" {...props} />;
+}
+
+export { SearchIcon, ExternalLinkIcon, EnvelopeIcon, GithubIcon, StarIcon };
