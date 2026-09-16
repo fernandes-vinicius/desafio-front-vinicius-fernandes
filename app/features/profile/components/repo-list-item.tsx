@@ -55,8 +55,8 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 					</span>
 				)}
 				<span className="d-flex align-items-center gap-1 font-mono">
+					<span className="mt-1">{formatNumber(repo.stargazersCount)}</span>
 					<StarIcon className="text-primary" />
-					{formatNumber(repo.stargazersCount)}
 				</span>
 			</div>
 		</li>

@@ -8,7 +8,7 @@ export type IconProps = {
 function BootstrapIcon({
 	name,
 	className,
-	size = 14,
+	size = 16,
 }: IconProps & { name: string }) {
 	return (
 		<svg

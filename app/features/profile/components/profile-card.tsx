@@ -16,7 +16,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
 	const displayName = user.name ?? user.login;
 
 	return (
-		<article className="card p-4 h-100">
+		<article className="card shadow-sm p-4 h-100">
 			{/* Avatar */}
 			<img
 				src={user.avatarUrl || ""}
