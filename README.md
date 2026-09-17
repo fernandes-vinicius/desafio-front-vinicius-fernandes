@@ -26,17 +26,18 @@ Aplicação client-side (SPA) que consome a API pública do GitHub para buscar u
 | [Axios](https://axios-http.com/) | Cliente HTTP para consumo da API do GitHub |
 | [React Bootstrap](https://react-bootstrap.github.io/) + [Bootstrap 5](https://getbootstrap.com/) | UI e responsividade |
 | [nuqs](https://nuqs.47ng.com/) | Estado de ordenação sincronizado com a URL |
+| [Vitest](https://vitest.dev/) | Testes unitários |
 | [Biome](https://biomejs.dev/) | Lint e formatação de código |
 | [Vite](https://vitejs.dev/) | Build tool |
 
 ## 📁 Arquitetura
 
-O projeto segue uma organização por **features**, isolando regras de negócio e da domínio, com uma camada `shared` para o que é reutilizado entre features.
+O projeto segue uma organização por **features**, isolando regras de negócio e componentes específicos de cada domínio, com uma camada `shared` para o que é reutilizado entre features.
 
 ```
 app/
 ├── api/                     # Camada de acesso à API do GitHub
-│   ├── client.ts            # Instância do axios + tratamento de erros (404, ra
+│   ├── client.ts            # Instância do axios + tratamento de erros (404, rate limit)
 │   ├── error.ts             # Classe ApiError
 │   ├── types.ts             # Tipos dos dados retornados pela API
 │   └── services/            # Funções de chamada (getUser, getRepos, getRepo)
@@ -49,7 +50,7 @@ app/
 │       ├── hooks/           # Hooks (React Query) da feature
 │       └── utils/           # Funções auxiliares da feature
 │
-├── shared/                  # Componentes e utilitários usados em mais de uma camada
+├── shared/                  # Componentes e utilitários usados em mais de uma feature
 │   ├── components/
 │   └── utils/
 │
@@ -69,12 +70,10 @@ app/
 
 ### Decisões técnicas
 
-- **SPA sem SSR**: como o desafio pede uma aplicação *client-side* que consome o navegador, o `react-router.config.ts` desabilita o server-side rendering
-(`ssr: false`).
-- **TanStack Query** para as chamadas à API: cuida de cache, estados de loadinglicadas, sem precisar de um estado global manual.
-- **nuqs** para o filtro de ordenação: mantém a ordenação escolhida na URL (`?silhar/recarregar a página sem perder o filtro.
-- **Sem autenticação na API**: as chamadas à API do GitHub são feitas sem token-side), respeitando o limite público de 60 requisições/hora por IP — adequado ao
-escopo do desafio.
+- **SPA sem SSR**: como o desafio pede uma aplicação *client-side* que consome a API do GitHub diretamente do navegador, o `react-router.config.ts` desabilita o server-side rendering (`ssr: false`).
+- **TanStack Query** para as chamadas à API: cuida de cache, estados de loading/erro e evita requisições duplicadas, sem precisar de um estado global manual.
+- **nuqs** para o filtro de ordenação: mantém a ordenação escolhida na URL (`?sort=...`), permitindo compartilhar/recarregar a página sem perder o filtro.
+- **Sem autenticação na API**: as chamadas à API do GitHub são feitas sem token, direto do navegador (client-side), respeitando o limite público de 60 requisições/hora por IP — adequado ao escopo do desafio.
 
 ## 🚀 Como rodar localmente
 
@@ -97,6 +96,16 @@ pnpm build       # build de produção
 pnpm start       # sobe o build de produção
 pnpm typecheck   # checagem de tipos (TypeScript)
 pnpm format      # formata o código com Biome
+pnpm test        # roda os testes em modo watch
+pnpm test:run    # roda os testes uma vez (CI)
+```
+
+## 🧪 Testes
+
+Testes unitários com Vitest cobrindo a lógica de negócio pura: ordenação de repositórios (`sortRepos`) e formatação de dados (`formatNumber`, `formatRelativeTime`).
+
+```bash
+pnpm test:run
 ```
 
 ## 🔌 API
