@@ -9,13 +9,12 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from "react-router";
-
 import { Footer } from "~/shared/components/footer";
 import { Header } from "~/shared/components/header";
 import { NotFound } from "~/shared/components/not-found";
 
 import type { Route } from "./+types/root";
-import "./app.css";
+import appHref from "./app.css?url";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -37,6 +36,7 @@ export const links: Route.LinksFunction = () => [
 		href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap",
 	},
 	{ rel: "stylesheet", href: bootstrapHref },
+	{ rel: "stylesheet", href: appHref },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
