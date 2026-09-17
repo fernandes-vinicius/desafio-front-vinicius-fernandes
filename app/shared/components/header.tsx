@@ -11,7 +11,7 @@ export function Header() {
 					className="navbar-brand d-flex align-items-center gap-2 text-decoration-none mb-0"
 				>
 					<span className="brand-mark">GX</span>
-					GitHub Explorer
+					<strong>GitHub Explorer</strong>
 				</Link>
 
 				<a

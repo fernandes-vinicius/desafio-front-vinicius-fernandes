@@ -1,7 +1,6 @@
 import type { GithubRepo } from "~/api/types";
-import { getLanguageColor } from "~/features/profile/utils/language-colors";
-import { StarIcon } from "~/shared/components/icons";
-import { formatNumber } from "~/shared/utils/format-number";
+import { RepoLanguage } from "~/shared/components/repo-language";
+import { RepoStargazersCount } from "~/shared/components/repo-stargazers-count";
 import { formatRelativeTime } from "~/shared/utils/format-relative-time";
 
 type RepoListItemProps = {
@@ -19,9 +18,7 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 					<p className="font-mono mb-1">
 						<span className="text-body-tertiary">{owner}/</span>
 						<a
-							href={repo.html_url}
-							target="_blank"
-							rel="noreferrer"
+							href={`/u/${owner}/${repo.name}`}
 							className="fw-semibold text-primary text-decoration-none"
 						>
 							{repo.name}
@@ -41,26 +38,13 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 			</div>
 
 			<div className="d-flex align-items-center justify-content-between gap-3 flex-shrink-0 small text-body-secondary mt-2">
-				{repo.language && (
-					<span className="d-flex align-items-center gap-1">
-						<span
-							className="rounded-circle d-inline-block"
-							style={{
-								width: 9,
-								height: 9,
-								backgroundColor: getLanguageColor(repo.language),
-							}}
-							aria-hidden
-						/>
-						{repo.language}
-					</span>
-				)}
+				{repo.language && <RepoLanguage language={repo.language} />}
 
 				{stargazersCount > 0 && (
-					<span className="d-flex align-items-center gap-1 font-mono">
-						<span className="mt-1">{formatNumber(repo.stargazers_count)}</span>
-						<StarIcon className="text-primary" />
-					</span>
+					<RepoStargazersCount
+						value={repo.stargazers_count}
+						className="font-mono"
+					/>
 				)}
 			</div>
 		</li>

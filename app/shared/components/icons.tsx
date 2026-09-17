@@ -43,4 +43,15 @@ function StarIcon(props: IconProps) {
 	return <BootstrapIcon name="star-fill" {...props} />;
 }
 
-export { SearchIcon, ExternalLinkIcon, EnvelopeIcon, GithubIcon, StarIcon };
+function ArrowLeftIcon(props: IconProps) {
+	return <BootstrapIcon name="arrow-left" {...props} />;
+}
+
+export {
+	SearchIcon,
+	ExternalLinkIcon,
+	EnvelopeIcon,
+	GithubIcon,
+	StarIcon,
+	ArrowLeftIcon,
+};

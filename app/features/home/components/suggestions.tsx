@@ -1,6 +1,6 @@
 import { useSearch } from "~/features/home/hooks/use-search";
 
-const SUGGESTIONS = ["fernandes-vinicius", "devkatasoft", "pedrolinuxdev"];
+const SUGGESTIONS = ["fernandes-vinicius", "sebmarkbage", "sindresorhus"];
 
 export function Suggestions() {
 	const { search } = useSearch();
