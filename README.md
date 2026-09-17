@@ -1,87 +1,113 @@
-# Welcome to React Router!
+# GitHub Explorer
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Aplicação client-side (SPA) que consome a API pública do GitHub para buscar um usuário, exibir seu perfil e explorar seus repositórios ordenados por popularidade. Desenvolvida como desafio técnico para vaga de Front-End.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+🔗 **Demo:** https://desafio-front-vinicius-fernandes.vercel.app
 
-## Features
+## ✨ Funcionalidades
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Busca de um usuário do GitHub pelo username
+- Exibição dos detalhes do usuário: avatar, nome, bio, seguidores, seguindo e e-mail
+- Listagem dos repositórios públicos do usuário
+- Ordenação da listagem por estrelas (decrescente/crescente), nome ou atualização recente
+- Página de detalhes do repositório: nome, descrição, estrelas, linguagem principal e link externo para o GitHub
+- Tratamento de erros (usuário/repositório não encontrado, limite de requisições da API excedido)
+- Página 404 para rotas inexistentes
+- Layout responsivo (mobile, tablet, desktop)
 
-## Getting Started
+## 🛠️ Tecnologias
 
-### Installation
+| Tecnologia | Uso |
+|---|---|
+| [React 19](https://react.dev/) | Core |
+| [React Router v8](https://reactrouter.com/) | Roteamento (modo SPA, `ssr: false`) |
+| [TypeScript](https://www.typescriptlang.org/) | Tipagem estática (modo `strict`) |
+| [TanStack Query](https://tanstack.com/query) | Cache, loading/error state e requisições assíncronas |
+| [Axios](https://axios-http.com/) | Cliente HTTP para consumo da API do GitHub |
+| [React Bootstrap](https://react-bootstrap.github.io/) + [Bootstrap 5](https://getbootstrap.com/) | UI e responsividade |
+| [nuqs](https://nuqs.47ng.com/) | Estado de ordenação sincronizado com a URL |
+| [Biome](https://biomejs.dev/) | Lint e formatação de código |
+| [Vite](https://vitejs.dev/) | Build tool |
 
-Install the dependencies:
+## 📁 Arquitetura
+
+O projeto segue uma organização por **features**, isolando regras de negócio e da domínio, com uma camada `shared` para o que é reutilizado entre features.
+
+```
+app/
+├── api/                     # Camada de acesso à API do GitHub
+│   ├── client.ts            # Instância do axios + tratamento de erros (404, ra
+│   ├── error.ts             # Classe ApiError
+│   ├── types.ts             # Tipos dos dados retornados pela API
+│   └── services/            # Funções de chamada (getUser, getRepos, getRepo)
+│
+├── features/                # Cada pasta é uma feature isolada
+│   ├── home/                # Página inicial (busca)
+│   ├── user-profile/        # Perfil do usuário + listagem de repositórios
+│   └── repo-detail/         # Detalhe de um repositório
+│       ├── components/      # Componentes visuais da feature
+│       ├── hooks/           # Hooks (React Query) da feature
+│       └── utils/           # Funções auxiliares da feature
+│
+├── shared/                  # Componentes e utilitários usados em mais de uma camada
+│   ├── components/
+│   └── utils/
+│
+├── routes/                  # Componentes de rota (mapeados em routes.ts)
+├── routes.ts                # Definição das rotas da aplicação
+└── root.tsx                 # Layout raiz, providers e error boundary
+```
+
+### Rotas
+
+| Rota | Descrição |
+|---|---|
+| `/` | Busca de usuário |
+| `/u/:username` | Perfil do usuário + repositórios |
+| `/u/:username/:repo` | Detalhes de um repositório |
+| `*` | Página 404 |
+
+### Decisões técnicas
+
+- **SPA sem SSR**: como o desafio pede uma aplicação *client-side* que consome o navegador, o `react-router.config.ts` desabilita o server-side rendering
+(`ssr: false`).
+- **TanStack Query** para as chamadas à API: cuida de cache, estados de loadinglicadas, sem precisar de um estado global manual.
+- **nuqs** para o filtro de ordenação: mantém a ordenação escolhida na URL (`?silhar/recarregar a página sem perder o filtro.
+- **Sem autenticação na API**: as chamadas à API do GitHub são feitas sem token-side), respeitando o limite público de 60 requisições/hora por IP — adequado ao
+escopo do desafio.
+
+## 🚀 Como rodar localmente
+
+Pré-requisitos: [Node.js](https://nodejs.org/) 20+ e [pnpm](https://pnpm.io/).
 
 ```bash
-npm install
+# instalar dependências
+pnpm install
+
+# rodar em modo desenvolvimento
+pnpm dev
 ```
 
-### Development
+Aplicação disponível em `http://localhost:5173`.
 
-Start the development server with HMR:
+### Outros scripts
 
 ```bash
-npm run dev
+pnpm build       # build de produção
+pnpm start       # sobe o build de produção
+pnpm typecheck   # checagem de tipos (TypeScript)
+pnpm format      # formata o código com Biome
 ```
 
-Your application will be available at `http://localhost:5173`.
+## 🔌 API
 
-## Building for Production
+Consome diretamente a [API REST do GitHub](https://docs.github.com/en/rest):
 
-Create a production build:
+- `GET /users/{username}` — dados do usuário
+- `GET /users/{username}/repos` — repositórios do usuário
+- `GET /repos/{owner}/{repo}` — detalhes de um repositório
 
-```bash
-npm run build
-```
+## 👤 Autor
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+**Vinicius Fernandes**
+GitHub: [@fernandes-vinicius](https://github.com/fernandes-vinicius)
