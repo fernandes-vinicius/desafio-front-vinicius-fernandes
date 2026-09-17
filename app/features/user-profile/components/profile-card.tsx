@@ -79,7 +79,7 @@ export function ProfileCard({ username }: ProfileCardProps) {
 				variant="dark"
 				className="d-flex align-items-center justify-content-center gap-2"
 			>
-				Ver perfil no GItHub
+				Ver perfil no GitHub
 				<ExternalLinkIcon />
 				<span className="visually-hidden">(abre em nova aba)</span>
 			</Button>
