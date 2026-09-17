@@ -1,15 +1,114 @@
-@import "tailwindcss";
+:root {
+	/* tokens da identidade visual */
+	--gx-paper: #f5f6f9;
+	--gx-surface: #ffffff;
+	--gx-ink: #12151c;
+	--gx-ink-soft: #5b6472;
+	--gx-ink-faint: #8991a0;
+	--gx-line: #e3e6ec;
+	--gx-line-strong: #cfd3db;
+	--gx-accent: #b8863a;
+	--gx-accent-dark: #8c6427;
+	--gx-accent-soft: #f3e7d2;
+	--gx-font-display:
+		"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+	--gx-font-body: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+	--gx-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	/* tokens globais do Bootstrap — herdados por body/card/dropdown/form-control */
+	--bs-body-bg: var(--gx-paper);
+	--bs-body-color: var(--gx-ink);
+	--bs-body-font-family: var(--gx-font-body);
+	--bs-border-color: var(--gx-line);
+	--bs-border-color-translucent: var(--gx-line);
+	--bs-border-radius: 0.5rem;
+	--bs-border-radius-sm: 0.375rem;
+	--bs-border-radius-lg: 0.875rem;
+	--bs-box-shadow-sm: 0 1px 2px rgba(18, 21, 28, 0.05);
+	--bs-box-shadow: 0 20px 40px -22px rgba(18, 21, 28, 0.28);
+	--bs-link-color: var(--gx-accent-dark);
+	--bs-link-color-rgb: 140, 100, 39;
+	--bs-link-hover-color: var(--gx-accent);
+	--bs-primary: var(--gx-accent);
+	--bs-primary-rgb: 184, 134, 58;
 }
 
-html,
 body {
-  @apply bg-white dark:bg-gray-950;
+	background-color: var(--gx-paper);
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+h1,
+h2,
+h3 {
+	font-family: var(--gx-font-display);
+	letter-spacing: -0.01em;
+}
+
+.hero-field {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background-image:
+		radial-gradient(
+			560px 420px at 78% 100px,
+			rgba(184, 134, 58, 0.1),
+			transparent 60%
+		), linear-gradient(var(--gx-line) 1px, transparent 1px),
+		linear-gradient(90deg, var(--gx-line) 1px, transparent 1px);
+	background-size:
+		auto,
+		64px 64px,
+		64px 64px;
+	mask-image: radial-gradient(
+		1100px 640px at 50% 220px,
+		#000 40%,
+		transparent 78%
+	);
+	-webkit-mask-image: radial-gradient(
+		1100px 640px at 50% 220px,
+		#000 40%,
+		transparent 78%
+	);
+	opacity: 0.7;
+}
+
+.navbar-brand {
+	font-family: var(--gx-font-mono);
+	letter-spacing: -0.01em;
+}
+
+.brand-mark {
+	width: 28px;
+	height: 28px;
+	border-radius: 0.5rem;
+	background: linear-gradient(155deg, var(--gx-accent), var(--gx-accent-dark));
+	color: #fff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--gx-font-display);
+	font-weight: 700;
+	font-size: 0.8rem;
+	flex-shrink: 0;
+}
+
+.font-mono {
+	font-family: var(--gx-font-mono);
+}
+
+/* .btn-dark grava cor literal no Sass do Bootstrap — precisa sobrescrever a variável local */
+.btn-dark {
+	--bs-btn-bg: var(--gx-ink);
+	--bs-btn-border-color: var(--gx-ink);
+	--bs-btn-hover-bg: #000;
+	--bs-btn-hover-border-color: #000;
+	--bs-btn-active-bg: #000;
+	--bs-btn-active-border-color: #000;
+}
+
+/* anel de foco e borda de foco também são literais (tint do azul padrão) */
+.form-control:focus,
+.form-select:focus {
+	border-color: var(--gx-accent);
+	box-shadow: 0 0 0 0.25rem rgba(184, 134, 58, 0.25);
 }

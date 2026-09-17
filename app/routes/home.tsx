@@ -1,13 +1,10 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+import { Hero } from "~/features/home/components/hero";
 
 export default function Home() {
-  return <Welcome />;
+	return (
+		<main className="d-flex flex-column flex-grow-1 justify-content-center position-relative overflow-hidden">
+			<div className="hero-field" aria-hidden />
+			<Hero />
+		</main>
+	);
 }
