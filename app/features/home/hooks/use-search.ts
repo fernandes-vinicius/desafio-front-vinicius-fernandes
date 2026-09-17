@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 
-export function useGithubSearch() {
+export function useSearch() {
 	const navigate = useNavigate();
 
 	function search(username: string) {

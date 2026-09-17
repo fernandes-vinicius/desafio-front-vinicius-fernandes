@@ -4,7 +4,7 @@ import { ExternalLinkIcon } from "~/shared/components/icons";
 
 export function Header() {
 	return (
-		<header>
+		<header className="position-relative">
 			<div className="container-xxl d-flex align-items-center gap-3 py-3">
 				<Link
 					to="/"

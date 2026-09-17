@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import bootstrapHref from "bootstrap/dist/css/bootstrap.min.css?url";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v8";
 import {
@@ -14,6 +15,14 @@ import { Header } from "~/shared/components/header";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			networkMode: "always",
+		},
+	},
+});
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -45,7 +54,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<div className="d-flex flex-column" style={{ minHeight: "100dvh" }}>
-					<div className="hero-field" aria-hidden="true" />
 					<Header />
 					<div className="flex-grow-1 d-flex flex-column">{children}</div>
 					<Footer />
@@ -59,9 +67,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
 	return (
-		<NuqsAdapter>
-			<Outlet />
-		</NuqsAdapter>
+		<QueryClientProvider client={queryClient}>
+			<NuqsAdapter>
+				<Outlet />
+			</NuqsAdapter>
+		</QueryClientProvider>
 	);
 }
 

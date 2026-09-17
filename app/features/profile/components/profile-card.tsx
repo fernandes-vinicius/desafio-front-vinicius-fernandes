@@ -1,25 +1,36 @@
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 
 import { StatItem } from "~/features/profile/components/stat-item";
-import type { GithubUser } from "~/shared/api/types";
+import { useGithubUser } from "~/features/profile/hooks/use-github-user";
 import {
 	EnvelopeIcon,
 	ExternalLinkIcon,
 	GithubIcon,
 } from "~/shared/components/icons";
+import { Loader } from "~/shared/components/loader";
 
 type ProfileCardProps = {
-	user: GithubUser;
+	username: string;
 };
 
-export function ProfileCard({ user }: ProfileCardProps) {
+export function ProfileCard({ username }: ProfileCardProps) {
+	const { data: user, status, error } = useGithubUser(username);
+
+	if (status === "pending") {
+		return <Loader>Carregando usuário</Loader>;
+	}
+
+	if (status === "error") {
+		return <Alert variant="danger">{error.message}</Alert>;
+	}
+
 	const displayName = user.name ?? user.login;
 
 	return (
-		<article className="card shadow-sm p-4 h-100">
+		<article className="card shadow-sm p-4">
 			{/* Avatar */}
 			<img
-				src={user.avatarUrl || ""}
+				src={user.avatar_url || ""}
 				alt={`Foto de perfil de ${displayName}`}
 				width={64}
 				height={64}
@@ -49,7 +60,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
 				<li className="d-flex align-items-center gap-2 small">
 					<GithubIcon className="text-body-tertiary" />
 					<a
-						href={user.htmlUrl}
+						href={user.html_url}
 						target="_blank"
 						rel="noreferrer"
 						className="text-body-secondary"
@@ -62,7 +73,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
 
 			<Button
 				as="a"
-				href={user.htmlUrl}
+				href={user.html_url}
 				target="_blank"
 				rel="noreferrer"
 				variant="dark"

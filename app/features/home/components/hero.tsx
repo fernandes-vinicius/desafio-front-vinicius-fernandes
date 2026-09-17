@@ -1,20 +1,7 @@
-import { useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
-
-import { SearchIcon } from "~/shared/components/icons";
-import { useGithubSearch } from "~/shared/hooks/use-github-search";
-
-const SUGGESTIONS = ["fernandes-vinicius", "devkatasoft", "pedrolinuxdev"];
+import { SearchForm } from "~/features/home/components/search-form";
+import { Suggestions } from "~/features/home/components/suggestions";
 
 export function Hero() {
-	const { search } = useGithubSearch();
-	const [query, setQuery] = useState("");
-
-	function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-		event.preventDefault();
-		search(query);
-	}
-
 	return (
 		<section
 			id="hero"
@@ -46,52 +33,8 @@ export function Hero() {
 				ordenados por popularidade — em segundos.
 			</p>
 
-			<search
-				aria-label="Busca principal"
-				className="w-100"
-				style={{ maxWidth: 560 }}
-			>
-				<Form onSubmit={handleSubmit}>
-					<InputGroup size="lg" className="shadow-sm">
-						<InputGroup.Text>
-							<SearchIcon className="text-body-tertiary" />
-						</InputGroup.Text>
-						<Form.Control
-							type="search"
-							placeholder="Digite um usuário, ex: fernandes-vinicius"
-							aria-label="Buscar usuário do GitHub"
-							value={query}
-							onChange={(event) => setQuery(event.target.value)}
-						/>
-						<Button type="submit" variant="dark">
-							Buscar
-						</Button>
-					</InputGroup>
-				</Form>
-			</search>
-
-			{/* Suggestions */}
-			{/** biome-ignore lint/a11y/useSemanticElements: <> */}
-			<div
-				role="group"
-				aria-labelledby="suggestions-label"
-				className="d-flex align-items-center gap-2 flex-wrap justify-content-center mt-4"
-			>
-				<span id="suggestions-label" className="text-body-tertiary small">
-					Experimente:
-				</span>
-				{SUGGESTIONS.map((username) => (
-					<button
-						key={username}
-						type="button"
-						aria-label={`Buscar usuário ${username}`}
-						className="btn btn-outline-secondary btn-sm rounded-pill font-mono"
-						onClick={() => search(username)}
-					>
-						{username}
-					</button>
-				))}
-			</div>
+			<SearchForm />
+			<Suggestions />
 		</section>
 	);
 }

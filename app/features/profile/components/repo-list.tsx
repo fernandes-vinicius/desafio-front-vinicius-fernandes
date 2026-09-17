@@ -1,27 +1,73 @@
+import { Alert, Button } from "react-bootstrap";
+
 import { RepoListItem } from "~/features/profile/components/repo-list-item";
-import type { GithubRepo } from "~/shared/api/types";
-import { EmptyState, EmptyStateText } from "~/shared/components/empty-state";
+import { useGithubRepos } from "~/features/profile/hooks/use-github-repos";
+import { useSortFilter } from "~/features/profile/hooks/use-sort-filter";
+import { sortRepos } from "~/features/profile/utils/sort-repos";
+import { Loader } from "~/shared/components/loader";
 
 type RepoListProps = {
-	repos: GithubRepo[];
+	username: string;
 };
 
-export function RepoList({ repos }: RepoListProps) {
+export function RepoList({ username }: RepoListProps) {
+	const { sort } = useSortFilter();
+	const {
+		data,
+		status,
+		error,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+	} = useGithubRepos(username);
+
+	if (status === "pending") {
+		return <Loader>Carregando repositórios...</Loader>;
+	}
+
+	if (status === "error") {
+		return <Alert variant="danger">{error.message}</Alert>;
+	}
+
+	const repos = data.pages.flat();
+
 	if (repos.length === 0) {
 		return (
-			<EmptyState className="list-group shadow-sm">
-				<EmptyStateText className="list-group-item">
+			<div className="list-group shadow-sm">
+				<p className="list-group-item text-body-secondary text-center mb-0 py-4 ">
 					Nenhum repositório público encontrado.
-				</EmptyStateText>
-			</EmptyState>
+				</p>
+			</div>
 		);
 	}
 
+	const sortedRepos = sortRepos(repos, sort);
+
 	return (
-		<ul className="list-group shadow-sm" aria-label="Lista de repositórios">
-			{repos.map((repo) => (
-				<RepoListItem key={repo.id} repo={repo} />
-			))}
-		</ul>
+		<div>
+			<p className="text-body-tertiary fw-normal mb-2">
+				Mostrando {repos.length} {repos.length === 1 ? "público" : "públicos"}
+			</p>
+
+			<ul className="list-group shadow-sm" aria-label="Lista de repositórios">
+				{sortedRepos.map((repo) => (
+					<RepoListItem key={repo.id} repo={repo} />
+				))}
+			</ul>
+
+			{/* Load More */}
+			{hasNextPage && (
+				<div className="d-flex justify-content-center mt-4">
+					<Button
+						size="sm"
+						variant="outline-secondary"
+						onClick={() => fetchNextPage()}
+						disabled={isFetchingNextPage}
+					>
+						{isFetchingNextPage ? "Carregando..." : "Carregar mais"}
+					</Button>
+				</div>
+			)}
+		</div>
 	);
 }

@@ -1,5 +1,5 @@
+import type { GithubRepo } from "~/api/types";
 import { getLanguageColor } from "~/features/profile/utils/language-colors";
-import type { GithubRepo } from "~/shared/api/types";
 import { StarIcon } from "~/shared/components/icons";
 import { formatNumber } from "~/shared/utils/format-number";
 import { formatRelativeTime } from "~/shared/utils/format-relative-time";
@@ -9,7 +9,8 @@ type RepoListItemProps = {
 };
 
 export function RepoListItem({ repo }: RepoListItemProps) {
-	const [owner] = repo.fullName.split("/");
+	const [owner] = repo.full_name.split("/");
+	const stargazersCount = repo.stargazers_count;
 
 	return (
 		<li className="list-group-item py-3">
@@ -18,7 +19,7 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 					<p className="font-mono mb-1">
 						<span className="text-body-tertiary">{owner}/</span>
 						<a
-							href={repo.htmlUrl}
+							href={repo.html_url}
 							target="_blank"
 							rel="noreferrer"
 							className="fw-semibold text-primary text-decoration-none"
@@ -32,9 +33,9 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 					)}
 				</div>
 
-				<div className="small text-body-secondary">
+				<div className="small flex-shrink-0 text-body-secondary">
 					<span className="d-none d-lg-inline">
-						{formatRelativeTime(repo.updatedAt)}
+						{formatRelativeTime(repo.updated_at)}
 					</span>
 				</div>
 			</div>
@@ -54,10 +55,13 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 						{repo.language}
 					</span>
 				)}
-				<span className="d-flex align-items-center gap-1 font-mono">
-					<span className="mt-1">{formatNumber(repo.stargazersCount)}</span>
-					<StarIcon className="text-primary" />
-				</span>
+
+				{stargazersCount > 0 && (
+					<span className="d-flex align-items-center gap-1 font-mono">
+						<span className="mt-1">{formatNumber(repo.stargazers_count)}</span>
+						<StarIcon className="text-primary" />
+					</span>
+				)}
 			</div>
 		</li>
 	);

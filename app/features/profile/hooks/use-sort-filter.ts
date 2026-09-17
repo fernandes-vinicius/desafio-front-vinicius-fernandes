@@ -7,6 +7,8 @@ export const SORT_OPTIONS = [
 	{ value: "updated-desc", label: "atualização recente" },
 ] as const;
 
+export type SortOption = (typeof SORT_OPTIONS)[number]["value"];
+
 const sortValues = SORT_OPTIONS.map((option) => option.value);
 
 export function useSortFilter() {
