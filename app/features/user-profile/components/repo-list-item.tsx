@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import type { GithubRepo } from "~/api/types";
 import { RepoLanguage } from "~/shared/components/repo-language";
 import { RepoStargazersCount } from "~/shared/components/repo-stargazers-count";
@@ -17,12 +19,12 @@ export function RepoListItem({ repo }: RepoListItemProps) {
 				<div className="min-w-0">
 					<p className="font-mono mb-1">
 						<span className="text-body-tertiary">{owner}/</span>
-						<a
-							href={`/u/${owner}/${repo.name}`}
+						<Link
+							to={`/u/${owner}/${repo.name}`}
 							className="fw-semibold text-primary text-decoration-none"
 						>
 							{repo.name}
-						</a>
+						</Link>
 					</p>
 
 					{repo.description && (
