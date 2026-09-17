@@ -65,7 +65,7 @@ describe("sortRepos", () => {
 		expect(repos).toEqual(original);
 	});
 
-  it('retorna o array vazio quando ná repos', () => {
-    expect(sortRepos([], 'stars-desc')).toEqual([])
-  })
+	it("retorna o array vazio quando ná repos", () => {
+		expect(sortRepos([], "stars-desc")).toEqual([]);
+	});
 });
