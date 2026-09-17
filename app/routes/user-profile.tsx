@@ -1,10 +1,10 @@
-import { ProfileCard } from "~/features/profile/components/profile-card";
-import { RepoList } from "~/features/profile/components/repo-list";
-import { SortFilter } from "~/features/profile/components/sort-filter";
+import { ProfileCard } from "~/features/user-profile/components/profile-card";
+import { RepoList } from "~/features/user-profile/components/repo-list";
+import { SortFilter } from "~/features/user-profile/components/sort-filter";
 
-import type { Route } from "./+types/profile";
+import type { Route } from "./+types/user-profile";
 
-export default function Profile({ params }: Route.ComponentProps) {
+export default function UserProfile({ params }: Route.ComponentProps) {
 	const { username } = params;
 
 	return (

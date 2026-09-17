@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import {
 	SORT_OPTIONS,
 	useSortFilter,
-} from "~/features/profile/hooks/use-sort-filter";
+} from "~/features/user-profile/hooks/use-sort-filter";
 
 export function SortFilter() {
 	const { sortValues, sort, setSort } = useSortFilter();

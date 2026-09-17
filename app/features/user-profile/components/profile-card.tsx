@@ -1,7 +1,7 @@
 import { Alert, Button } from "react-bootstrap";
 
-import { StatItem } from "~/features/profile/components/stat-item";
-import { useGithubUser } from "~/features/profile/hooks/use-github-user";
+import { StatItem } from "~/features/user-profile/components/stat-item";
+import { useGithubUser } from "~/features/user-profile/hooks/use-github-user";
 import {
 	EnvelopeIcon,
 	ExternalLinkIcon,

@@ -1,4 +1,4 @@
-import { getLanguageColor } from "~/features/profile/utils/language-colors";
+import { getLanguageColor } from "~/shared/utils/language-colors";
 
 type RepoLanguageProps = {
 	language: string;

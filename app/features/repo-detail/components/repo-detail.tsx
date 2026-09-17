@@ -1,7 +1,7 @@
 import { Alert, Button } from "react-bootstrap";
 import { Link } from "react-router";
 
-import { useGithubRepo } from "~/features/repo/hooks/use-github-repo";
+import { useGithubRepo } from "~/features/repo-detail/hooks/use-github-repo";
 import { ArrowLeftIcon, ExternalLinkIcon } from "~/shared/components/icons";
 import { Loader } from "~/shared/components/loader";
 import { RepoLanguage } from "~/shared/components/repo-language";

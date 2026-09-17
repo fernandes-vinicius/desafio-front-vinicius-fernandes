@@ -1,5 +1,5 @@
 import type { GithubRepo } from "~/api/types";
-import type { SortOption } from "~/features/profile/hooks/use-sort-filter";
+import type { SortOption } from "~/features/user-profile/hooks/use-sort-filter";
 
 export function sortRepos(repos: GithubRepo[], sort: SortOption): GithubRepo[] {
 	const sorted = [...repos];

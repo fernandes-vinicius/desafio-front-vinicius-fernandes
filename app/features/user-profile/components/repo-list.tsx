@@ -1,9 +1,9 @@
 import { Alert, Button } from "react-bootstrap";
 
-import { RepoListItem } from "~/features/profile/components/repo-list-item";
-import { useGithubRepos } from "~/features/profile/hooks/use-github-repos";
-import { useSortFilter } from "~/features/profile/hooks/use-sort-filter";
-import { sortRepos } from "~/features/profile/utils/sort-repos";
+import { RepoListItem } from "~/features/user-profile/components/repo-list-item";
+import { useGithubRepos } from "~/features/user-profile/hooks/use-github-repos";
+import { useSortFilter } from "~/features/user-profile/hooks/use-sort-filter";
+import { sortRepos } from "~/features/user-profile/utils/sort-repos";
 import { Loader } from "~/shared/components/loader";
 
 type RepoListProps = {
