@@ -12,6 +12,7 @@ import {
 
 import { Footer } from "~/shared/components/footer";
 import { Header } from "~/shared/components/header";
+import { NotFound } from "~/shared/components/not-found";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -77,24 +78,32 @@ export default function App() {
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	let message = "Oops!";
-	let details = "An unexpected error occurred.";
+	let details = "Ocorreu algum erro inesperado.";
 	let stack: string | undefined;
 
+	if (isRouteErrorResponse(error) && error.status === 404) {
+		return (
+			<main className="flex-grow-1 d-flex flex-column align-items-center justify-content-center text-center px-3 py-5">
+				<NotFound />
+			</main>
+		);
+	}
+
 	if (isRouteErrorResponse(error)) {
-		message = error.status === 404 ? "404" : "Error";
-		details =
-			error.status === 404
-				? "The requested page could not be found."
-				: error.statusText || details;
+		message = `Erro ${error.status}`;
+		details = error.statusText || details;
 	} else if (import.meta.env.DEV && error && error instanceof Error) {
 		details = error.message;
 		stack = error.stack;
 	}
 
 	return (
-		<main className="container mx-auto p-4 pt-16">
+		<main
+			className="d-flex flex-column align-items-center justify-content-center text-center flex-grow-1"
+			style={{ padding: "2rem" }}
+		>
 			<h1>{message}</h1>
-			<p>{details}</p>
+			<p className="text-body-secondary">{details}</p>
 			{stack && (
 				<pre className="w-full overflow-x-auto p-4">
 					<code>{stack}</code>
